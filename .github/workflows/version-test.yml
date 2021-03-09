@@ -1,0 +1,60 @@
+# This is a basic workflow to help you get started with Actions
+name: Testing GitVersion
+
+# Controls when the action will run.
+on:
+  #Trigger the workflow on merging a pull request to master branch
+#  pull_request:
+#    types: [assigned, opened, synchronize, reopened]
+  # Triggers the workflow on push or pull request events but only for the workflow branch
+  push:
+#    branches: [ Setup-Workflow ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  BROKER_HOSTNAME: ${{ secrets.BROKER_HOSTNAME }}
+
+jobs:
+  install-gitversion:
+    runs-on: ubuntu-latest
+    steps:
+#      - name: Install and Execute GitVersion
+#        run: |
+#            dotnet tool install GitVersion.Tool --tool-path /home/runner/work/_temp/ --version 5.6.6
+#            dotnet-gitversion /home/runner/work/Versioning-Test/Versioning-Test /output json /output buildserver
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with:
+          versionSpec: '5.x'
+
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0.9.7
+
+#  calculate-version:
+#    name: Calculate Version
+#    runs-on: ubuntu-latest
+#    needs: install-gitversion
+#    outputs:
+#      semVer: ${{ steps.gitversion.outputs.semVer }}
+#    steps:
+      # gitversion/execute step omitted for brevity
+
+
+#      - name: Determine Version
+#        id: gitversion
+#        uses: gittools/actions/gitversion/execute@v0.9.7
+
+#  display-semver:
+#    name: Display Semantic Version
+#    runs-on: ubuntu-latest
+#    needs: install-gitversion
+#    env:
+#      SEMVER: ${{ needs.calculate-version.outputs.semVer }}
+#    steps:
+#      - name: Display version
+#        run: |
+#          echo SemVer: $SEMVER
