@@ -5,7 +5,7 @@ name: Testing GitVersion
 on:
   #Trigger the workflow on merging a pull request to master branch
   pull_request:
-    branches: [master]
+    branches: [main]
     types: [closed]
   # Triggers the workflow on push or pull request events but only for the workflow branch
 #  push:
