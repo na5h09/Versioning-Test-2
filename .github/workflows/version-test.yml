@@ -8,7 +8,7 @@ on:
     branches: [main]
     types: [closed]
   # Triggers the workflow on push or pull request events but only for the workflow branch
-#  push:
+  push:
 #    branches: [ Setup-Workflow ]
 
   # Allows you to run this workflow manually from the Actions tab
