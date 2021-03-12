@@ -4,10 +4,11 @@ name: Testing GitVersion
 # Controls when the action will run.
 on:
   #Trigger the workflow on merging a pull request to master branch
-#  pull_request:
-#    types: [assigned, opened, synchronize, reopened]
+  pull_request:
+    branches: [master]
+    types: [closed]
   # Triggers the workflow on push or pull request events but only for the workflow branch
-  push:
+#  push:
 #    branches: [ Setup-Workflow ]
 
   # Allows you to run this workflow manually from the Actions tab
@@ -21,15 +22,13 @@ env:
 jobs:
   install-gitversion:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-#      - name: Install and Execute GitVersion
-#        run: |
-#            dotnet tool install GitVersion.Tool --tool-path /home/runner/work/_temp/ --version 5.6.6
-#            dotnet-gitversion /home/runner/work/Versioning-Test/Versioning-Test /output json /output buildserver
+
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.7
         with:
@@ -42,4 +41,4 @@ jobs:
       - name: Create Build Label
         run: echo $CURRENT_BUILD
         env:
-          CURRENT_BUILD: ${{steps.gitversion.outputs.major}} + ${{steps.gitversion.outputs.minor}} + ${{steps.gitversion.outputs.buildMetaData}}
+          CURRENT_BUILD: ${{steps.gitversion.outputs.major}}.${{steps.gitversion.outputs.minor}}.${{steps.gitversion.outputs.buildMetaData}}
