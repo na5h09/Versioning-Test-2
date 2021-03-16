@@ -41,7 +41,7 @@ jobs:
       - name: Create Build Label
         run: echo $CURRENT_BUILD
         env:
-          CURRENT_BUILD: ${{steps.gitversion.outputs.major}}.${{steps.gitversion.outputs.minor}}.${{github.event.pull_request.head.ref}}.${{steps.gitversion.outputs.preReleaseNumber}}
+          CURRENT_BUILD: ${{steps.gitversion.outputs.major}}.${{steps.gitversion.outputs.minor}}.${{github.event.pull_request.head.ref}}.${{github.event.pull_request.run_number}}
 
   merge-successful:
     runs-on: ubuntu-latest
