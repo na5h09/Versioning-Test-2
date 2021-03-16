@@ -41,12 +41,41 @@ jobs:
 
       - name: Calculate Build Number
         id: current-build
-        run: echo "::set-output name=count:$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)"
+        run: |
+            #!/bin/bash
+
+            branch=$(git rev-parse --abbrev-ref HEAD)
+            latest=$(git tag  -l --merged master --sort='-*authordate' | head -n1)
+
+            semver_parts=(${latest//./ })
+            major=${semver_parts[0]}
+            minor=${semver_parts[1]}
+            patch=${semver_parts[2]}
+
+            count=$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)
+            version=""
+
+            case $branch in
+                "master")
+                    version=${major}.$((minor+1)).0
+                    ;;
+                "feature/*")
+                    version=${major}.${minor}.${patch}-${branch}-${count}
+                    ;;
+                *)
+                    >&2 echo "unsupported branch type"
+                    exit 1
+                    ;;
+            esac
+
+            echo "::set-output name=count${version}""
+#            exit 0
+#            echo "::set-output name=count:$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)"
 
       - name: Create Build Label
         run: echo $CURRENT_BUILD
         env:
-          CURRENT_BUILD: ${{steps.gitversion.outputs.major}}.${{steps.gitversion.outputs.minor}}.${{github.event.pull_request.head.ref}}.${{steps.current-build.outputs.count}}
+          CURRENT_BUILD: ${{steps.current-build.outputs.count}}
 
   merge-successful:
     runs-on: ubuntu-latest
