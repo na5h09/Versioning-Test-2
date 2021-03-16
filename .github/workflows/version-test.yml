@@ -18,6 +18,7 @@ on:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   BROKER_HOSTNAME: ${{ secrets.BROKER_HOSTNAME }}
+  CURRENT_BUILD_COUNT: $(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)
 
 jobs:
   waiting-to-merge:
@@ -41,7 +42,7 @@ jobs:
       - name: Create Build Label
         run: echo $CURRENT_BUILD
         env:
-          CURRENT_BUILD: ${{steps.gitversion.outputs.major}}.${{steps.gitversion.outputs.minor}}.${{github.event.pull_request.head.ref}}.${{github.event.pull_request.run_number}}
+          CURRENT_BUILD: ${{steps.gitversion.outputs.major}}.${{steps.gitversion.outputs.minor}}.${{github.event.pull_request.head.ref}}.$CURRENT_BUILD_COUNT
 
   merge-successful:
     runs-on: ubuntu-latest
