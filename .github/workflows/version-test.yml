@@ -57,7 +57,7 @@ jobs:
             version=${major}.${minor}-${branch}-${count}
 
             echo "::set-output name=count${version}""
-#            exit 0
+            exit 0
 #            echo "::set-output name=count:$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)"
 
       - name: Create Build Label
@@ -101,7 +101,7 @@ jobs:
             version=${major}.$((minor + 1))
 
             echo "::set-output name=count${version}""
-#            exit 0
+            exit 0
 #            echo "::set-output name=count:$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)"
 
       - name: Create Build Label
