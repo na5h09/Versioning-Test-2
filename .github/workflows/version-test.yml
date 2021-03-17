@@ -45,7 +45,7 @@ jobs:
             #!/bin/bash
 
             branch=$(git rev-parse --abbrev-ref HEAD)
-            latest=$(git tag  -l --merged master --sort='-*authordate' | head -n1)
+            latest=$(git tag  -l --merged main --sort='-*authordate' | head -n1)
 
             semver_parts=(${latest//./ })
             major=${semver_parts[0]}
@@ -90,7 +90,7 @@ jobs:
             #!/bin/bash
 
             branch=$(git rev-parse --abbrev-ref HEAD)
-            latest=$(git tag  -l --merged master --sort='-*authordate' | head -n1)
+            latest=$(git tag  -l --merged main --sort='-*authordate' | head -n1)
 
             semver_parts=(${latest//./ })
             major=${semver_parts[0]}
