@@ -30,14 +30,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.7
-        with:
-          versionSpec: '5.x'
-
-      - name: Determine Version
-        id: gitversion
-        uses: gittools/actions/gitversion/execute@v0.9.7
+#      - name: Install GitVersion
+#        uses: gittools/actions/gitversion/setup@v0.9.7
+#        with:
+#          versionSpec: '5.x'
+#
+#      - name: Determine Version
+#        id: gitversion
+#        uses: gittools/actions/gitversion/execute@v0.9.7
 
       - name: Calculate Build Number
         id: current-build
@@ -58,7 +58,7 @@ jobs:
 
             version=${major}.${minor}-${branch}.${count}
 
-            echo “::set-env name=VERSION_TAG::${version}”
+            echo "::set-env name=VERSION_TAG::${version}"
 #            exit 0
 #            echo "::set-output name=count:$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)"
 
@@ -74,14 +74,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.7
-        with:
-          versionSpec: '5.x'
-
-      - name: Determine Version
-        id: gitversion
-        uses: gittools/actions/gitversion/execute@v0.9.7
+#      - name: Install GitVersion
+#        uses: gittools/actions/gitversion/setup@v0.9.7
+#        with:
+#          versionSpec: '5.x'
+#
+#      - name: Determine Version
+#        id: gitversion
+#        uses: gittools/actions/gitversion/execute@v0.9.7
 
       - name: Calculate Build Number
         id: current-build
@@ -99,7 +99,7 @@ jobs:
 
             version=${major}.$((minor + 1))
 
-            echo "::set-output name=count${version}""
+            echo "::set-env name=VERSION_TAG::${version}"
 #            exit 0
 #            echo "::set-output name=count:$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)"
 
