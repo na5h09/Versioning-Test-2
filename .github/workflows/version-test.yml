@@ -58,12 +58,12 @@ jobs:
 
             version=${major}.${minor}-${branch}.${count}
 
-            echo "::set-env name=VERSION_TAG::${version}"
+            echo "version_tag=${version}" >> $GITHUB_ENV
 #            exit 0
 #            echo "::set-output name=count:$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)"
 
       - name: Create Build Label
-        run: echo ${{env.VERSION_TAG}}
+        run: echo ${{env.wersion_tag}}
 
   merge-successful:
     runs-on: ubuntu-latest
