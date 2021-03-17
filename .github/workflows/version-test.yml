@@ -44,7 +44,6 @@ jobs:
         run: |
             #!/bin/bash
 
-#            branch=$(git rev-parse --abbrev-ref HEAD)
             branch=$(git branch --show-current)
             latest=$(git describe --tags --abbrev=0)
 
