@@ -45,14 +45,13 @@ jobs:
             #!/bin/bash
 
             branch=$(git rev-parse --abbrev-ref HEAD)
-            latest=$(git tag  -l --merged main --sort='-*authordate' | head -n1)
+            latest=$(git describe --tags --abbrev=0)
 
             semver_parts=(${latest//./ })
             major=${semver_parts[0]}
             minor=${semver_parts[1]}
-            patch=${semver_parts[2]}
 
-            count=$(git rev-list HEAD ${latest} --ancestry-path ${latest} --count)
+            count=$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)
             version=""
 
             version=${major}.${minor}-${branch}-${count}
@@ -90,12 +89,11 @@ jobs:
             #!/bin/bash
 
             branch=$(git rev-parse --abbrev-ref HEAD)
-            latest=$(git tag  -l --merged main --sort='-*authordate' | head -n1)
+            latest=$(git describe --tags --abbrev=0)
 
             semver_parts=(${latest//./ })
             major=${semver_parts[0]}
             minor=${semver_parts[1]}
-            patch=${semver_parts[2]}
 
             count=$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)
             version=""
