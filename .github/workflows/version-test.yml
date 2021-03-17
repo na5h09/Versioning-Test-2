@@ -47,12 +47,17 @@ jobs:
             branch=$(git rev-parse --abbrev-ref HEAD)
             latest=$(git describe --tags --abbrev=0)
 
+            echo ${branch}
+            echo ${latest}
+
             semver_parts=(${latest//./ })
             major=${semver_parts[0]}
             minor=${semver_parts[1]}
 
             count=$(git rev-list HEAD ^${latest} --ancestry-path ${latest} --count)
             version=""
+
+            echo ${count}
 
             version=${major}.${minor}-${branch}-${count}
 
