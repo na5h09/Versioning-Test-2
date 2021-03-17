@@ -44,7 +44,7 @@ jobs:
         run: |
             #!/bin/bash
 
-            branch=$(git branch --show-current)
+            branch=${{github.head_ref}}
             latest=$(git describe --tags --abbrev=0)
 
             echo ${branch}
